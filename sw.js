@@ -156,10 +156,28 @@ self.addEventListener('notificationclick', event => {
 self.addEventListener('sync', event => {
     if (event.tag === 'background-sync') {
         event.waitUntil(doBackgroundSync());
+    } else if (event.tag === 'assignment-sync') {
+        event.waitUntil(syncAssignments());
     }
 });
 
 function doBackgroundSync() {
     // Sync any pending data when connection is restored
     return Promise.resolve();
+}
+
+function syncAssignments() {
+    // Sync assignments when connection is restored
+    return fetch('/api/assignments/sync', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            // Sync data here
+        })
+    }).catch(() => {
+        // Handle offline case
+        console.log('Background sync failed - will retry later');
+    });
 }
