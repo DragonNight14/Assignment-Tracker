@@ -1,0 +1,31 @@
+{
+  "name": "assignment-tracker",
+  "version": "1.0.0",
+  "description": "A PWA for tracking academic assignments with Canvas and Google Classroom integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8080 -c-1",
+    "build": "echo 'No build step required for PWA'",
+    "test": "echo 'No tests specified'",
+    "debug": "debug-and-build.bat",
+    "build-apk": "build-apk.bat",
+    "generate-icons": "start create-icons.html",
+    "pwa-test": "npx http-server -p 8080 -c-1 && start http://localhost:8080"
+  },
+  "keywords": [
+    "pwa",
+    "assignments",
+    "education",
+    "canvas",
+    "google-classroom",
+    "productivity"
+  ],
+  "author": "Assignment Tracker Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

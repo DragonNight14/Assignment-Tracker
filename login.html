@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#667eea">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Assignment Tracker">
+    <title>Login - Assignment Tracker</title>
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
+    <link rel="apple-touch-icon" href="./icon-192x192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>📚 Assignment Tracker</h1>
+                <p>Connect your learning platforms to sync assignments</p>
+            </div>
+
+            <div class="login-options">
+                <!-- Canvas LMS Integration -->
+                <div class="integration-card">
+                    <div class="integration-header">
+                        <div class="integration-icon canvas-icon">🎨</div>
+                        <div class="integration-info">
+                            <h3>Canvas LMS</h3>
+                            <p>Sync assignments from your Canvas courses</p>
+                        </div>
+                    </div>
+                    <button class="connect-btn canvas-btn" id="canvas-connect-btn">
+                        <span class="btn-text">Connect Canvas</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+
+                <!-- Google Classroom Integration -->
+                <div class="integration-card">
+                    <div class="integration-header">
+                        <div class="integration-icon google-icon">📖</div>
+                        <div class="integration-info">
+                            <h3>Google Classroom</h3>
+                            <p>Import assignments from Google Classroom</p>
+                        </div>
+                    </div>
+                    <button class="connect-btn google-btn" id="google-connect-btn">
+                        <span class="btn-text">Connect Google</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+
+                <!-- Manual Entry Option -->
+                <div class="integration-card">
+                    <div class="integration-header">
+                        <div class="integration-icon manual-icon">✏️</div>
+                        <div class="integration-info">
+                            <h3>Manual Entry</h3>
+                            <p>Add assignments manually without syncing</p>
+                        </div>
+                    </div>
+                    <button class="connect-btn manual-btn" id="manual-connect-btn">
+                        <span class="btn-text">Continue Manually</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="login-footer">
+                <p>Your data is stored locally and securely</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas Login Modal -->
+    <div class="modal" id="canvas-modal">
+        <div class="modal-content">
+            <h3>Connect to Canvas LMS</h3>
+            <form id="canvas-form">
+                <div class="form-group">
+                    <label for="canvas-url">Canvas URL:</label>
+                    <input type="url" id="canvas-url" placeholder="https://yourschool.instructure.com" required>
+                    <small>Enter your school's Canvas URL</small>
+                </div>
+                <div class="form-group">
+                    <label for="canvas-token">Access Token:</label>
+                    <input type="password" id="canvas-token" placeholder="Your Canvas API token" required>
+                    <small><a href="#" id="token-help">How to get your Canvas token</a></small>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="canvas-cancel">Cancel</button>
+                    <button type="submit">Connect</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Google Classroom Modal -->
+    <div class="modal" id="google-modal">
+        <div class="modal-content">
+            <h3>Connect to Google Classroom</h3>
+            <div class="oauth-info">
+                <div class="oauth-icon">🔐</div>
+                <p>You'll be redirected to Google to authorize access to your Classroom data.</p>
+                <p><strong>We only access:</strong></p>
+                <ul>
+                    <li>Course information</li>
+                    <li>Assignment details and due dates</li>
+                    <li>Your name and email</li>
+                </ul>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="google-cancel">Cancel</button>
+                <button type="button" id="google-authorize">Authorize with Google</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

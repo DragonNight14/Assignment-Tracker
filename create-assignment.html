@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#667eea">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Assignment Tracker">
+    <title>Create Assignment - Assignment Tracker</title>
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
+    <link rel="apple-touch-icon" href="./icon-192x192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="create-assignment.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="create-header">
+            <button class="back-btn" id="back-btn">← Back</button>
+            <h1>Create Assignment</h1>
+            <div class="header-spacer"></div>
+        </header>
+
+        <main class="create-main">
+            <form class="assignment-form" id="create-assignment-form">
+                <div class="form-section">
+                    <h2>📝 Assignment Details</h2>
+                    
+                    <div class="form-group">
+                        <label for="assignment-title">Title *</label>
+                        <input type="text" id="assignment-title" placeholder="e.g., Math Homework Chapter 5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignment-description">Description</label>
+                        <textarea id="assignment-description" rows="4" placeholder="Add details about the assignment..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignment-subject">Subject</label>
+                        <select id="assignment-subject">
+                            <option value="">Select a subject</option>
+                            <option value="math">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="english">English</option>
+                            <option value="history">History</option>
+                            <option value="art">Art</option>
+                            <option value="pe">Physical Education</option>
+                            <option value="music">Music</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>📅 Due Date & Time</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="assignment-due-date">Due Date *</label>
+                            <input type="date" id="assignment-due-date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="assignment-due-time">Due Time</label>
+                            <input type="time" id="assignment-due-time" value="23:59">
+                        </div>
+                    </div>
+
+                    <div class="priority-preview" id="priority-preview">
+                        <span class="priority-badge">📅 Worry About Later</span>
+                        <span class="priority-text">Due in more than 3 weeks</span>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>🎨 Appearance</h2>
+                    
+                    <div class="form-group">
+                        <label for="assignment-color">Color Theme</label>
+                        <div class="color-picker">
+                            <input type="color" id="assignment-color" value="#4CAF50">
+                            <div class="color-presets">
+                                <button type="button" class="color-preset" data-color="#e74c3c" style="background: #e74c3c;"></button>
+                                <button type="button" class="color-preset" data-color="#f39c12" style="background: #f39c12;"></button>
+                                <button type="button" class="color-preset" data-color="#4CAF50" style="background: #4CAF50;"></button>
+                                <button type="button" class="color-preset" data-color="#3498db" style="background: #3498db;"></button>
+                                <button type="button" class="color-preset" data-color="#9b59b6" style="background: #9b59b6;"></button>
+                                <button type="button" class="color-preset" data-color="#34495e" style="background: #34495e;"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="assignment-preview" id="assignment-preview">
+                        <div class="preview-card">
+                            <div class="assignment-header">
+                                <div class="assignment-checkbox"></div>
+                                <div class="assignment-title">Assignment Preview</div>
+                            </div>
+                            <div class="assignment-description">This is how your assignment will look</div>
+                            <div class="assignment-due-date">Due date will appear here</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>⚙️ Additional Options</h2>
+                    
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="assignment-reminder">
+                            <span class="checkmark"></span>
+                            Set reminder notification
+                        </label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="assignment-recurring">
+                            <span class="checkmark"></span>
+                            Recurring assignment
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancel-btn">Cancel</button>
+                    <button type="submit" class="create-btn">Create Assignment</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="create-assignment.js"></script>
+</body>
+</html>
