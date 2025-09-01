@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Tracker</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#6366f1">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <div class="login-container">
+                <div class="logo">
+                    <h1>Assignment Tracker</h1>
+                    <p>Stay organized with your coursework</p>
+                </div>
+                
+                <div class="login-options">
+                    <button class="login-btn canvas-btn" onclick="loginWithCanvas()">
+                        <span class="icon">📚</span>
+                        Connect Canvas LMS
+                    </button>
+                    
+                    <button class="login-btn google-btn" onclick="loginWithGoogle()">
+                        <span class="icon">🎓</span>
+                        Connect Google Classroom
+                    </button>
+                    
+                    <button class="login-btn guest-btn" onclick="continueAsGuest()">
+                        <span class="icon">👤</span>
+                        Continue as Guest
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div id="main-screen" class="screen">
+            <header class="app-header">
+                <h1>My Assignments</h1>
+                <div class="header-actions">
+                    <button class="sync-btn" onclick="syncAssignments()">🔄</button>
+                    <button class="add-btn" onclick="showCreateAssignment()">+</button>
+                </div>
+            </header>
+
+            <div class="assignment-sections">
+                <!-- High Priority Section -->
+                <div class="assignment-section high-priority">
+                    <h2>🔥 High Priority (Due in 4 days)</h2>
+                    <div id="high-priority-assignments" class="assignments-list"></div>
+                </div>
+
+                <!-- Coming Up Section -->
+                <div class="assignment-section coming-up">
+                    <h2>⏰ Coming Up (Due in 1-2 weeks)</h2>
+                    <div id="coming-up-assignments" class="assignments-list"></div>
+                </div>
+
+                <!-- Worry Later Section -->
+                <div class="assignment-section worry-later">
+                    <h2>📅 Worry About Later (Due in 3+ weeks)</h2>
+                    <div id="worry-later-assignments" class="assignments-list"></div>
+                </div>
+
+                <!-- Completed Section -->
+                <div class="assignment-section completed">
+                    <h2>✅ Completed</h2>
+                    <div id="completed-assignments" class="assignments-list"></div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav">
+                <button class="nav-btn active" onclick="showScreen('main')">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-label">Home</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('all-assignments')">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">All</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('calendar')">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Calendar</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('settings')">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Create Assignment Screen -->
+        <div id="create-assignment-screen" class="screen">
+            <header class="screen-header">
+                <button class="back-btn" onclick="goBack()">←</button>
+                <h1>Create Assignment</h1>
+                <button class="save-btn" onclick="saveAssignment()">Save</button>
+            </header>
+
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="assignment-title">Assignment Title</label>
+                    <input type="text" id="assignment-title" placeholder="Enter assignment title">
+                </div>
+
+                <div class="form-group">
+                    <label for="assignment-course">Course</label>
+                    <select id="assignment-course">
+                        <option value="">Select a course</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Band">Band</option>
+                        <option value="English">English</option>
+                        <option value="Math">Math</option>
+                        <option value="History">History</option>
+                        <option value="Science">Science</option>
+                        <option value="Art">Art</option>
+                        <option value="PE">Physical Education</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="assignment-due-date">Due Date</label>
+                    <input type="datetime-local" id="assignment-due-date">
+                </div>
+
+                <div class="form-group">
+                    <label for="assignment-tags">Tags</label>
+                    <div class="tags-container">
+                        <input type="text" id="assignment-tags-input" placeholder="Add tags (press Enter to add)">
+                        <div id="assignment-tags-list" class="tags-list"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="assignment-description">Description</label>
+                    <textarea id="assignment-description" placeholder="Assignment details..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Assignments Screen -->
+        <div id="all-assignments-screen" class="screen">
+            <header class="screen-header">
+                <h1>All Assignments</h1>
+                <div class="filter-options">
+                    <select id="course-filter" onchange="filterAssignments()">
+                        <option value="">All Courses</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Band">Band</option>
+                        <option value="English">English</option>
+                        <option value="Math">Math</option>
+                        <option value="History">History</option>
+                        <option value="Science">Science</option>
+                        <option value="Art">Art</option>
+                        <option value="PE">Physical Education</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </header>
+
+            <div id="all-assignments-list" class="assignments-list"></div>
+
+            <nav class="bottom-nav">
+                <button class="nav-btn" onclick="showScreen('main')">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-label">Home</span>
+                </button>
+                <button class="nav-btn active" onclick="showScreen('all-assignments')">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">All</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('calendar')">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Calendar</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('settings')">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Calendar Screen -->
+        <div id="calendar-screen" class="screen">
+            <header class="screen-header">
+                <h1>Calendar</h1>
+                <div class="calendar-nav">
+                    <button onclick="previousMonth()">←</button>
+                    <span id="current-month"></span>
+                    <button onclick="nextMonth()">→</button>
+                </div>
+            </header>
+
+            <div id="calendar-container">
+                <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+
+            <!-- Assignment Tooltip -->
+            <div id="assignment-tooltip" class="tooltip hidden">
+                <div class="tooltip-content"></div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-btn" onclick="showScreen('main')">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-label">Home</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('all-assignments')">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">All</span>
+                </button>
+                <button class="nav-btn active" onclick="showScreen('calendar')">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Calendar</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('settings')">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings-screen" class="screen">
+            <header class="screen-header">
+                <h1>Settings</h1>
+            </header>
+
+            <div class="settings-container">
+                <div class="settings-section">
+                    <h3>Appearance</h3>
+                    
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span>Dark Mode</span>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+                                <span class="slider"></span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">Color Theme</label>
+                        <div class="color-palette">
+                            <div class="color-option" data-color="blue" onclick="setColorTheme('blue')" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"></div>
+                            <div class="color-option" data-color="purple" onclick="setColorTheme('purple')" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)"></div>
+                            <div class="color-option" data-color="green" onclick="setColorTheme('green')" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)"></div>
+                            <div class="color-option" data-color="orange" onclick="setColorTheme('orange')" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)"></div>
+                        </div>
+                        <input type="color" id="custom-color" onchange="setCustomColor()" placeholder="Custom Color">
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">Theme</label>
+                        <select id="theme-select" onchange="setTheme(this.value)">
+                            <option value="default">Default</option>
+                            <option value="purple">Purple</option>
+                            <option value="blue">Blue</option>
+                            <option value="green">Green</option>
+                            <option value="ocean">🌊 Ocean (Premium)</option>
+                            <option value="sunset">🌅 Sunset (Premium)</option>
+                            <option value="forest">🌲 Forest (Premium)</option>
+                            <option value="royal">👑 Royal (Premium)</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">Background</label>
+                        <select id="background-select" onchange="setBackground()">
+                            <option value="gradient">Gradient</option>
+                            <option value="solid">Solid Color</option>
+                            <option value="image">Custom Image</option>
+                        </select>
+                        <input type="file" id="background-image" accept="image/*" onchange="setBackgroundImage()" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Notifications</h3>
+                    
+                    <div class="setting-item">
+                        <label>Push Notifications</label>
+                        <input type="checkbox" id="notifications-toggle">
+                    </div>
+                </div>
+
+                <!-- Subscription Section -->
+                <div class="settings-section">
+                    <h3>Subscription</h3>
+                    <div id="subscription-info" class="subscription-info">
+                        <div class="current-plan">
+                            <span class="plan-name">Free Plan</span>
+                            <span class="plan-features">10 assignments • 2 courses • Basic sync</span>
+                        </div>
+                    </div>
+                    
+                    <div class="subscription-tiers">
+                        <div class="tier-card free-tier">
+                            <h4>Free</h4>
+                            <div class="price">$0<span>/month</span></div>
+                            <ul class="features">
+                                <li>Up to 10 assignments</li>
+                                <li>2 courses maximum</li>
+                                <li>Daily sync</li>
+                                <li>Basic themes</li>
+                            </ul>
+                            <button class="tier-btn current-tier" disabled>Current Plan</button>
+                        </div>
+                        
+                        <div class="tier-card premium-tier">
+                            <h4>Premium</h4>
+                            <div class="price">$4.99<span>/month</span></div>
+                            <ul class="features">
+                                <li>Unlimited assignments</li>
+                                <li>Unlimited courses</li>
+                                <li>Real-time sync</li>
+                                <li>Custom themes</li>
+                                <li>Advanced notifications</li>
+                                <li>Calendar export</li>
+                            </ul>
+                            <button class="tier-btn upgrade-btn" onclick="upgradeToPremium()">Upgrade</button>
+                        </div>
+                        
+                        <div class="tier-card pro-tier">
+                            <h4>Pro</h4>
+                            <div class="price">$9.99<span>/month</span></div>
+                            <ul class="features">
+                                <li>Everything in Premium</li>
+                                <li>Team collaboration</li>
+                                <li>Advanced analytics</li>
+                                <li>Priority support</li>
+                                <li>Cloud backup</li>
+                                <li>Multi-device sync</li>
+                            </ul>
+                            <button class="tier-btn upgrade-btn" onclick="upgradeToPro()">Upgrade</button>
+                        </div>
+                    </div>
+                    
+                    <div id="manage-subscription" class="manage-subscription" style="display: none;">
+                        <button class="cancel-btn" onclick="cancelSubscription()">Cancel Subscription</button>
+                    <div class="setting-item">
+                        <label class="setting-label">Reminder Time</label>
+                        <select id="reminder-time">
+                            <option value="1">1 day before</option>
+                            <option value="2">2 days before</option>
+                            <option value="7">1 week before</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>API Integration</h3>
+                    
+                    <div class="setting-item">
+                        <button class="settings-btn" onclick="configureCanvas()">Configure Canvas LMS</button>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <button class="settings-btn" onclick="configureGoogleClassroom()">Configure Google Classroom</button>
+                    </div>
+
+                    <div class="setting-item">
+                        <button class="settings-btn sync-btn" onclick="syncAllAssignments()">Sync All Assignments</button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Account</h3>
+                    
+                    <div class="setting-item">
+                        <span class="account-info" id="account-info">Not logged in</span>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <button class="settings-btn danger" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-btn" onclick="showScreen('main')">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-label">Home</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('all-assignments')">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">All</span>
+                </button>
+                <button class="nav-btn" onclick="showScreen('calendar')">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Calendar</span>
+                </button>
+                <button class="nav-btn active" onclick="showScreen('settings')">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+        <script src="api.js"></script>
+        <script src="payments.js"></script>
+        <script src="app.js"></script>
+</body>
+</html>

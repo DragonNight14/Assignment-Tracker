@@ -1,0 +1,51 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:0.9" />
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGradient)" filter="url(#shadow)"/>
+  
+  <!-- Assignment List Icon -->
+  <g transform="translate(256, 256)" fill="url(#iconGradient)">
+    <!-- Clipboard Background -->
+    <rect x="-80" y="-100" width="160" height="200" rx="20" ry="20" fill="url(#iconGradient)" opacity="0.9"/>
+    
+    <!-- Clipboard Clip -->
+    <rect x="-30" y="-110" width="60" height="20" rx="10" ry="10" fill="url(#iconGradient)"/>
+    
+    <!-- Assignment Lines -->
+    <g stroke="url(#bgGradient)" stroke-width="4" stroke-linecap="round">
+      <!-- Line 1 -->
+      <line x1="-60" y1="-60" x2="40" y2="-60"/>
+      <circle cx="-70" cy="-60" r="6" fill="none" stroke-width="3"/>
+      
+      <!-- Line 2 -->
+      <line x1="-60" y1="-20" x2="40" y2="-20"/>
+      <circle cx="-70" cy="-20" r="6" fill="none" stroke-width="3"/>
+      
+      <!-- Line 3 (Checked) -->
+      <line x1="-60" y1="20" x2="40" y2="20"/>
+      <circle cx="-70" cy="20" r="6" fill="url(#bgGradient)"/>
+      <polyline points="-75,15 -70,22 -62,10" fill="none" stroke="white" stroke-width="2"/>
+      
+      <!-- Line 4 -->
+      <line x1="-60" y1="60" x2="40" y2="60"/>
+      <circle cx="-70" cy="60" r="6" fill="none" stroke-width="3"/>
+    </g>
+    
+    <!-- Priority Indicator -->
+    <circle cx="50" cy="-60" r="8" fill="#f59e0b"/>
+    <text x="50" y="-55" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">!</text>
+  </g>
+</svg>
