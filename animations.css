@@ -1,0 +1,408 @@
+/* 60fps Smooth Animations for HW Tracker */
+
+/* View Transitions */
+.slide-out-left {
+  animation: slideOutLeft 0.4s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slide-out-right {
+  animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Card Animations */
+.assignment-card {
+  animation: cardSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.assignment-card:nth-child(1) { animation-delay: 0.1s; }
+.assignment-card:nth-child(2) { animation-delay: 0.15s; }
+.assignment-card:nth-child(3) { animation-delay: 0.2s; }
+.assignment-card:nth-child(4) { animation-delay: 0.25s; }
+.assignment-card:nth-child(5) { animation-delay: 0.3s; }
+
+@keyframes cardSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Completion Animation */
+.assignment-card.completing {
+  animation: completeTask 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes completeTask {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 20px 60px rgba(34, 197, 94, 0.3);
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+/* Checkbox Animation */
+.assignment-checkbox.checking {
+  animation: checkboxPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes checkboxPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Delete Animation */
+.assignment-card.deleting {
+  animation: deleteCard 0.4s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes deleteCard {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-20px) scale(0.95);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(-100%) scale(0.8);
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Navigation Animations */
+.nav-btn {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-btn:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+.nav-btn.active {
+  animation: navActivate 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes navActivate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Create Button Animation */
+.create-assignment-btn {
+  animation: createButtonFloat 3s ease-in-out infinite;
+}
+
+@keyframes createButtonFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.create-assignment-btn:hover {
+  animation: createButtonHover 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes createButtonHover {
+  to {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 20px 60px rgba(245, 158, 11, 0.4);
+  }
+}
+
+/* Loading Animations */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-pulse {
+  animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Progress Bar Animation */
+.progress-fill {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: progressShimmer 2s infinite;
+}
+
+@keyframes progressShimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Calendar Animations */
+.calendar-day {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.calendar-day:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.calendar-day:active {
+  transform: scale(0.95);
+}
+
+/* Pip Marker Animation */
+.pip-marker {
+  position: fixed;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-heavy);
+  z-index: 1000;
+  animation: pipAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 280px;
+  pointer-events: auto;
+}
+
+@keyframes pipAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.pip-marker.hiding {
+  animation: pipDisappear 0.2s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes pipDisappear {
+  to {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+}
+
+/* Notification Animations */
+.notification {
+  animation: notificationSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notification.hiding {
+  animation: notificationSlideOut 0.3s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes notificationSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes notificationSlideOut {
+  to {
+    opacity: 0;
+    transform: translateX(100%) translateY(-20px);
+  }
+}
+
+/* Settings Animations */
+.settings-section {
+  animation: settingsSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.settings-section:nth-child(1) { animation-delay: 0.1s; }
+.settings-section:nth-child(2) { animation-delay: 0.2s; }
+.settings-section:nth-child(3) { animation-delay: 0.3s; }
+.settings-section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes settingsSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Color Palette Animations */
+.palette-option {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.palette-option:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: var(--shadow-light);
+}
+
+.palette-option:active {
+  transform: scale(0.95);
+}
+
+.palette-option.selected {
+  animation: paletteSelected 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes paletteSelected {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Micro-interactions */
+.glass-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-heavy);
+}
+
+/* Stagger animations for lists */
+.stagger-animation > * {
+  animation: staggerFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-animation > *:nth-child(2) { animation-delay: 0.15s; }
+.stagger-animation > *:nth-child(3) { animation-delay: 0.2s; }
+.stagger-animation > *:nth-child(4) { animation-delay: 0.25s; }
+.stagger-animation > *:nth-child(5) { animation-delay: 0.3s; }
+.stagger-animation > *:nth-child(6) { animation-delay: 0.35s; }
+
+@keyframes staggerFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Performance optimizations */
+.assignment-card,
+.glass-card,
+.nav-btn,
+.create-assignment-btn {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus animations */
+.assignment-checkbox:focus,
+.nav-btn:focus,
+.create-assignment-btn:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  animation: focusGlow 0.3s ease-out;
+}
+
+@keyframes focusGlow {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+  100% { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0); }
+}
